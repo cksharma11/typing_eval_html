@@ -12,13 +12,15 @@ contentSpace.innerText = content;
 
 const maxTime = 120;
 let time = 0;
+let speed = 0;
+let accuracy = 0;
 
 const getTypingResult = function() {
   const originalText = content.trimRight().split(/[ \n]+/);
   const typedText = typingSpace.value.trimRight().split(/[ \n]+/);
   const correctCount = countCorrectWords(originalText, typedText);
-  let accuracy = getAccuracy(correctCount, typedText);
-  let speed = getSpeed(typedText);
+  accuracy = getAccuracy(correctCount, typedText);
+  speed = getSpeed(typedText);
   updateResultDivs(accuracy, speed);
 };
 
@@ -54,8 +56,15 @@ const countCorrectWords = function(originalText, typedText) {
   return count;
 };
 
+const isTypingCompleted = function() {
+  const lengthOfConetnt = content.trimRight().split(/[ \n]+/).length;
+  const lengthOftypedContent = typingSpace.value.trimRight().split(/[ \n]+/)
+    .length;
+  return lengthOfConetnt == lengthOftypedContent;
+};
+
 setInterval(() => {
-  if (time == 120) {
+  if (time == 120 || isTypingCompleted()) {
     window.alert(`Well Done.\nSPEED : ${speed}\nACCURACY : ${accuracy}`);
     location.reload();
   }
