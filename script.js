@@ -15,9 +15,13 @@ let time = 0;
 let speed = 0;
 let accuracy = 0;
 
+const getWordsOf = function(content) {
+  return content.trimRight().split(/[ \n]+/);
+};
+
 const getTypingResult = function() {
-  const originalText = content.trimRight().split(/[ \n]+/);
-  const typedText = typingSpace.value.trimRight().split(/[ \n]+/);
+  const originalText = getWordsOf(content);
+  const typedText = getWordsOf(typingSpace.value);
   const correctCount = countCorrectWords(originalText, typedText);
   accuracy = getAccuracy(correctCount, typedText);
   speed = getSpeed(typedText);
@@ -57,9 +61,8 @@ const countCorrectWords = function(originalText, typedText) {
 };
 
 const isTypingCompleted = function() {
-  const lengthOfConetnt = content.trimRight().split(/[ \n]+/).length;
-  const lengthOftypedContent = typingSpace.value.trimRight().split(/[ \n]+/)
-    .length;
+  const lengthOfConetnt = getWordsOf(content).length;
+  const lengthOftypedContent = getWordsOf(typingSpace.value).length;
   return lengthOfConetnt == lengthOftypedContent;
 };
 
